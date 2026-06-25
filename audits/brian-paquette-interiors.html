@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Audit — Brian Paquette Interiors</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0d0d0d;
+      color: #d4d4d4;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background-color: #101010;
+      border-bottom: 3px solid #AAFF00;
+      padding: 48px 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .audit-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #AAFF00;
+      margin-bottom: 10px;
+    }
+
+    .company-name {
+      font-size: 40px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .website-url {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #555555;
+    }
+
+    .website-url a {
+      color: #555555;
+      text-decoration: none;
+    }
+
+    .website-url a:hover {
+      color: #888888;
+    }
+
+    .grade-block {
+      background-color: #1a0808;
+      border: 2px solid #8b1a1a;
+      border-radius: 6px;
+      padding: 20px 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .grade-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666666;
+      margin-bottom: 4px;
+    }
+
+    .grade-value {
+      font-size: 80px;
+      font-weight: 900;
+      color: #cc2222;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 40px 80px;
+    }
+
+    /* ── HOOK ── */
+    .hook {
+      border-left: 4px solid #AAFF00;
+      padding: 24px 28px;
+      background-color: #111111;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 56px;
+    }
+
+    .hook p {
+      font-size: 18px;
+      font-weight: 400;
+      color: #cccccc;
+      line-height: 1.65;
+    }
+
+    /* ── SECTION BLOCKS ── */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #AAFF00;
+      margin-bottom: 10px;
+    }
+
+    .section-body {
+      background-color: #111111;
+      border: 1px solid #1e1e1e;
+      border-radius: 6px;
+      padding: 22px 24px;
+    }
+
+    .section-body p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── REVENUE LEAK ── */
+    .revenue-block {
+      background-color: #150a0a;
+      border: 1px solid #3d1010;
+      border-radius: 6px;
+      padding: 22px 24px;
+    }
+
+    .revenue-block p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── RULE ── */
+    .rule {
+      height: 1px;
+      background-color: #1a1a1a;
+      margin: 48px 0;
+    }
+
+    /* ── SOLUTION ── */
+    .solution-block {
+      background-color: #0b1500;
+      border: 2px solid #AAFF00;
+      border-radius: 6px;
+      padding: 32px 28px;
+      margin-bottom: 56px;
+    }
+
+    .solution-block .section-label {
+      margin-bottom: 14px;
+    }
+
+    .solution-block p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background-color: #111111;
+      border: 1px solid #1e1e1e;
+      border-radius: 8px;
+      padding: 52px 40px;
+      text-align: center;
+    }
+
+    .cta-heading {
+      font-size: 30px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      color: #666666;
+      max-width: 420px;
+      margin: 0 auto 32px;
+      line-height: 1.55;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background-color: #AAFF00;
+      color: #0d0d0d;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: #99ee00;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background-color: #080808;
+      border-top: 1px solid #161616;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: #333333;
+    }
+
+    .footer a {
+      color: #444444;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #666666;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header { padding: 32px 20px; }
+      .company-name { font-size: 28px; }
+      .grade-value { font-size: 60px; }
+      .container { padding: 40px 20px 60px; }
+      .cta { padding: 40px 20px; }
+      .footer { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <div class="audit-eyebrow">Visual Authority Audit</div>
+      <h1 class="company-name">Brian Paquette Interiors</h1>
+      <div class="website-url">
+        <a href="https://www.brianpaquetteinteriors.com/" target="_blank" rel="noopener">https://www.brianpaquetteinteriors.com/</a>
+      </div>
+    </div>
+    <div class="grade-block">
+      <div class="grade-label">Visual Authority Grade</div>
+      <div class="grade-value">A-</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- THE HOOK -->
+    <div class="hook">
+      <p>Brian Paquette Interiors establishes a strong hook by clearly positioning itself as a 'full-service high-end interior design' firm. The immediate social proof of being 'featured in Architectural Digest, Dwell, Luxe Magazine and more' instantly validates their expertise and aesthetic quality, setting a high expectation for visual excellence. The homepage's predominant use of large, professional photography (implied by filenames) further reinforces this luxury positioning and visual authority.</p>
+    </div>
+
+    <!-- GAP SECTIONS -->
+    <div class="section">
+      <div class="section-label">Asset Quality Gaps</div>
+      <div class="section-body">
+        <p>1. **Missing Alt Text:** A significant gap is the consistent lack of descriptive `alt` attributes on all image tags (`alt=""`). For an interior design firm, images are paramount; this omission severely impacts SEO, accessibility for screen reader users, and the ability for search engines to fully understand and rank their visual content. 
+2. **Image Metadata Processing Disabled:** The `imageMetadataProcessingEnabled: false` setting in `Static.SQUARESPACE_CONTEXT` indicates a missed opportunity to leverage valuable EXIF data from professional photographs, potentially losing information about the camera, lens, settings, and copyright embedded by photographers.
+3. **Modern Image Formats:** While Squarespace handles responsive image scaling (`?format=XXXw`), the HTML doesn't explicitly indicate the serving of modern image formats like WebP or AVIF. Implementing these formats could provide further performance gains for large, high-quality images without compromising visual fidelity.
+4. **Favicon Format:** The favicon is an older `.ico` format, which could be updated to a modern PNG or SVG for better quality and consistency across devices.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Mission Control Gaps</div>
+      <div class="section-body">
+        <p>1. **Limited Image-Specific Structured Data:** Beyond basic OpenGraph and Twitter card metadata, there's a lack of detailed schema.org markup (e.g., `ImageObject` or `Product` schema where applicable) for individual design projects or specific elements within images. This limits search engines' ability to deeply understand and categorize the visual content.
+2. **Centralized Visual Asset Management:** While Squarespace offers basic asset hosting, there's no indication of a more robust Digital Asset Management (DAM) strategy that would allow for tagging, categorizing, and cross-referencing visual assets with detailed project information or product links beyond standard Squarespace capabilities.
+3. **Analytics Integration for Visuals:** Standard Google Analytics (gtag.js) is present, but there's no visible custom tracking for specific image interactions (e.g., clicks on portfolio images, hover times on design elements), which limits insights into which visuals drive the most engagement or conversions.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Analytics &amp; Speed Gaps</div>
+      <div class="section-body">
+        <p>1. **Over-reliance on JavaScript for Page Structure (Fluid Engine):** The heavy use of `data-fluid-engine` and associated inline CSS with complex `grid-template-rows` and `grid-template-columns` suggests that much of the layout calculation happens client-side, potentially impacting perceived load speed or layout stability before all scripts execute.
+2. **Third-Party Script Load:** A significant number of Squarespace-specific and third-party scripts (e.g., Typekit, Google Tag) are loaded, which can cumulatively affect page load and execution times, even with `async` and `defer` attributes. 
+3. **CSS File Count:** Multiple `.css` files are linked, including component-specific ones, which can lead to multiple HTTP requests and potentially render-blocking issues, although Squarespace likely bundles these during serving.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- REVENUE LEAK -->
+    <div class="section">
+      <div class="section-label">The Revenue Leak</div>
+      <div class="revenue-block">
+        <p>The primary revenue leak stems from the **lack of descriptive `alt` text** on all images. For a high-end interior design firm, their portfolio images are their prime selling tool. Without proper alt text, these exquisite visuals are largely invisible to image search engines and inaccessible to a segment of the audience, severely limiting organic discovery, traffic, and lead generation from visual searches. The absence of rich image metadata also means missed opportunities for enhanced search visibility and deeper analytic insights, preventing the firm from fully understanding and optimizing their most valuable assets (their visual portfolio) to attract and convert high-value clients.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- PHOTO-FIRST SOLUTION -->
+    <div class="solution-block">
+      <div class="section-label">The Photo-First Solution</div>
+      <p>1. **Mandatory, Descriptive Alt Text:** Implement compelling and keyword-rich `alt` text for *every* image. Describe the room, style, key features, and client aspirations (e.g., 'Luxurious modern kitchen with custom oak cabinetry and marble island by Brian Paquette Interiors'). This will drastically improve image search rankings, accessibility, and SEO.
+2. **Structured Data for Visuals:** Integrate `ImageObject` schema.org markup for each portfolio image, detailing project name, design style, location, and key elements within the photograph. This provides rich context for search engines and can lead to enhanced visual search results.
+3. **Optimized Image Asset Management:** Beyond Squarespace's defaults, consider a strategy to embed specific project details, keywords, and copyright information into image metadata (EXIF/IPTC) upon upload. Regularly audit image usage to ensure the highest-performing visuals are prominently displayed and consistently updated.
+4. **Conversion-Oriented Visual Integration:** Embed clear, context-specific calls-to-action directly on or immediately adjacent to impactful project images (e.g., 'Inquire About This Design' or 'View Project Case Study'). A/B test different CTA placements and wording to maximize conversion rates from visual engagement.
+5. **Advanced Visual Performance Analytics:** Implement custom event tracking in Google Analytics for visual interactions: image views, clicks on specific design elements within images, and scroll depth on photo galleries. Analyze this data to understand which visual styles, rooms, or features resonate most with potential clients, informing future photography commissions and website content strategy.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2 class="cta-heading">Ready to fix this?</h2>
+      <p class="cta-sub">This audit took 15 minutes. The fix takes one session. Let's talk about what visible looks like for Brian Paquette Interiors.</p>
+      <a class="cta-btn" href="https://russellmoorephotography.hbportal.co/public/6a3d34bca0879b2582033b9a" rel="noopener">Book a Discovery Call</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      Visibility Audit prepared by
+      <a href="https://russell-moore.com" target="_blank" rel="noopener">Russell Moore</a>
+      &nbsp;·&nbsp;
+      <a href="https://russell-moore.com" target="_blank" rel="noopener">russell-moore.com</a>
+    </p>
+  </footer>
+
+</body>
+</html>
