@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Audit — </title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0d0d0d;
+      color: #d4d4d4;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background-color: #101010;
+      border-bottom: 3px solid #AAFF00;
+      padding: 48px 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .audit-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #AAFF00;
+      margin-bottom: 10px;
+    }
+
+    .company-name {
+      font-size: 40px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .website-url {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #555555;
+    }
+
+    .website-url a {
+      color: #555555;
+      text-decoration: none;
+    }
+
+    .website-url a:hover {
+      color: #888888;
+    }
+
+    .grade-block {
+      background-color: #1a0808;
+      border: 2px solid #8b1a1a;
+      border-radius: 6px;
+      padding: 20px 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .grade-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666666;
+      margin-bottom: 4px;
+    }
+
+    .grade-value {
+      font-size: 80px;
+      font-weight: 900;
+      color: #cc2222;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 40px 80px;
+    }
+
+    /* ── HOOK ── */
+    .hook {
+      border-left: 4px solid #AAFF00;
+      padding: 24px 28px;
+      background-color: #111111;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 56px;
+    }
+
+    .hook p {
+      font-size: 18px;
+      font-weight: 400;
+      color: #cccccc;
+      line-height: 1.65;
+    }
+
+    /* ── SECTION BLOCKS ── */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #AAFF00;
+      margin-bottom: 10px;
+    }
+
+    .section-body {
+      background-color: #111111;
+      border: 1px solid #1e1e1e;
+      border-radius: 6px;
+      padding: 22px 24px;
+    }
+
+    .section-body p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── REVENUE LEAK ── */
+    .revenue-block {
+      background-color: #150a0a;
+      border: 1px solid #3d1010;
+      border-radius: 6px;
+      padding: 22px 24px;
+    }
+
+    .revenue-block p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── RULE ── */
+    .rule {
+      height: 1px;
+      background-color: #1a1a1a;
+      margin: 48px 0;
+    }
+
+    /* ── SOLUTION ── */
+    .solution-block {
+      background-color: #0b1500;
+      border: 2px solid #AAFF00;
+      border-radius: 6px;
+      padding: 32px 28px;
+      margin-bottom: 56px;
+    }
+
+    .solution-block .section-label {
+      margin-bottom: 14px;
+    }
+
+    .solution-block p {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.75;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background-color: #111111;
+      border: 1px solid #1e1e1e;
+      border-radius: 8px;
+      padding: 52px 40px;
+      text-align: center;
+    }
+
+    .cta-heading {
+      font-size: 30px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      color: #666666;
+      max-width: 420px;
+      margin: 0 auto 32px;
+      line-height: 1.55;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background-color: #AAFF00;
+      color: #0d0d0d;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: #99ee00;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background-color: #080808;
+      border-top: 1px solid #161616;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: #333333;
+    }
+
+    .footer a {
+      color: #444444;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #666666;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header { padding: 32px 20px; }
+      .company-name { font-size: 28px; }
+      .grade-value { font-size: 60px; }
+      .container { padding: 40px 20px 60px; }
+      .cta { padding: 40px 20px; }
+      .footer { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <div class="audit-eyebrow">Visual Authority Audit</div>
+      <h1 class="company-name"></h1>
+      <div class="website-url">
+        <a href="https://colleenknowles.com/" target="_blank" rel="noopener">https://colleenknowles.com/</a>
+      </div>
+    </div>
+    <div class="grade-block">
+      <div class="grade-label">Visual Authority Grade</div>
+      <div class="grade-value">C</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- THE HOOK -->
+    <div class="hook">
+      <p>The primary visual hook is a professionally captured, high-quality hero image of an interior space (`ColleenKnowles_Bayside-081-HDR.jpg`), which immediately establishes the firm's aesthetic. The accompanying text, 'One of the Pacific Northwest’s leading luxury residential designers,' serves as a strong textual complement, setting a high expectation for luxury and expertise.</p>
+    </div>
+
+    <!-- GAP SECTIONS -->
+    <div class="section">
+      <div class="section-label">Asset Quality Gaps</div>
+      <div class="section-body">
+        <p>The `og:image` and `twitter:image` meta tags use a generic branding logo (`ColleenKnowles_Sub-01.png`) instead of a high-impact, aspirational interior design project photo. This is a significant missed opportunity for visual authority and engagement on social media. While the Instagram gallery in the footer contains actual project visuals, their integration and optimization for a primary portfolio experience is unclear within this HTML structure. Some alt text for Instagram images is present but could be more consistently descriptive.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Mission Control Gaps</div>
+      <div class="section-body">
+        <p>There's a strategic disconnect in leveraging high-quality visual assets for initial brand impressions, particularly on social sharing platforms where the logo, rather than a project showcase, is displayed. The current setup implies reliance on an Instagram feed (located in the footer) for showcasing recent work, which, while dynamic, may not offer the curated, high-resolution, and site-controlled experience expected from a luxury interior design portfolio. A dedicated, in-house portfolio section with optimized images for direct impact is not evident in this HTML snippet, despite a 'Portfolio' link in the navigation.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Analytics &amp; Speed Gaps</div>
+      <div class="section-body">
+        <p>The website utilizes Squarespace's built-in image optimization features, including `srcset` and `loading='eager/lazy'`, which are positive for load speed. Images are served via Squarespace's CDN. Multiple Google Analytics tags (`analytics.js`, `gtag.js`) are present, suggesting tracking is in place. Based solely on the HTML, there are no overt critical speed issues identified related to visual assets, but detailed performance metrics would be required for a full assessment.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- REVENUE LEAK -->
+    <div class="section">
+      <div class="section-label">The Revenue Leak</div>
+      <div class="revenue-block">
+        <p>The failure to utilize compelling project imagery for `og:image` and `twitter:image` leads to a 'social share' revenue leak, as initial impressions on platforms like Facebook and Twitter are less engaging, likely reducing click-through rates. Additionally, if the main landing page's primary project showcase is limited to a single hero image and a footer-based Instagram feed, it may not adequately convey the breadth and depth of the firm's luxury work to new visitors, causing them to disengage before exploring further or contacting the firm.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- PHOTO-FIRST SOLUTION -->
+    <div class="solution-block">
+      <div class="section-label">The Photo-First Solution</div>
+      <p>Immediately update all social sharing meta tags (`og:image`, `twitter:image`) to feature a breathtaking, high-converting luxury interior design project image. Develop and prominently feature a dedicated, on-site 'Featured Projects' or 'Hero Portfolio' section on the homepage, displaying 3-5 of the absolute best, high-resolution project images with succinct, compelling descriptions. Optimize all portfolio images with descriptive alt text for improved accessibility and SEO. Ensure the 'Portfolio' navigation link leads to a robust, visually-rich page that showcases work effectively without relying heavily on external platforms.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2 class="cta-heading">Ready to fix this?</h2>
+      <p class="cta-sub">This audit took 15 minutes. The fix takes one session. Let's talk about what visible looks like for .</p>
+      <a class="cta-btn" href="https://russellmoorephotography.hbportal.co/public/6a3d34bca0879b2582033b9a" rel="noopener">Book a Discovery Call</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      Visibility Audit prepared by
+      <a href="https://russell-moore.com" target="_blank" rel="noopener">Russell Moore</a>
+      &nbsp;·&nbsp;
+      <a href="https://russell-moore.com" target="_blank" rel="noopener">russell-moore.com</a>
+    </p>
+  </footer>
+
+</body>
+</html>
