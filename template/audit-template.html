@@ -3,335 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Audit — {{COMPANY_NAME}}</title>
+  <title>Visibility Audit — {{COMPANY_NAME}}</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f8f9fa; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #1a1f2e; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
-    body {
-      background-color: #0d0d0d;
-      color: #d4d4d4;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* ─ TOP STRIPE ─ */
+    .top-stripe { height: 4px; background: #dc2626; }
 
-    /* ── HEADER ── */
-    .header {
-      background-color: #101010;
-      border-bottom: 3px solid #AAFF00;
-      padding: 48px 40px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 32px;
-    }
+    /* ─ HEADER ─ */
+    .header { background: #ffffff; padding: 40px 48px 36px; border-bottom: 1px solid #e5e7eb; }
+    .header-inner { max-width: 860px; margin: 0 auto; }
+    .report-label { font-size: 10px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #9ca3af; margin-bottom: 14px; }
+    .header-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .company-name { font-size: 40px; font-weight: 900; color: #111827; letter-spacing: -0.03em; line-height: 1.05; }
+    .company-url { margin-top: 8px; font-size: 12px; color: #9ca3af; }
+    .company-url a { color: #9ca3af; text-decoration: none; }
 
-    .audit-eyebrow {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #AAFF00;
-      margin-bottom: 10px;
-    }
+    /* ─ GRADE BLOCK ─ */
+    .grade-stamp { text-align: right; flex-shrink: 0; }
+    .grade-value { font-size: 88px; font-weight: 900; color: #dc2626; line-height: 1; letter-spacing: -0.05em; }
+    .grade-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #9ca3af; margin-top: 2px; }
 
-    .company-name {
-      font-size: 40px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-    }
+    /* ─ STAT ROW ─ */
+    .stat-row { background: #111827; padding: 0 48px; }
+    .stat-row-inner { max-width: 860px; margin: 0 auto; display: flex; }
+    .stat-tile { flex: 1; padding: 24px 20px; border-right: 1px solid #1f2937; text-align: center; }
+    .stat-tile:last-child { border-right: none; }
+    .stat-num { font-size: 36px; font-weight: 900; color: #f87171; line-height: 1; letter-spacing: -0.03em; }
+    .stat-desc { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #4b5563; margin-top: 6px; }
 
-    .website-url {
-      margin-top: 8px;
-      font-size: 13px;
-      color: #555555;
-    }
+    /* ─ BODY ─ */
+    .container { max-width: 860px; margin: 0 auto; padding: 48px 48px 80px; }
 
-    .website-url a {
-      color: #555555;
-      text-decoration: none;
-    }
+    /* ─ HOOK ─ */
+    .hook { margin-bottom: 44px; }
+    .hook p { font-size: 18px; color: #1f2937; line-height: 1.7; font-weight: 400; border-left: 4px solid #dc2626; padding-left: 20px; }
 
-    .website-url a:hover {
-      color: #888888;
-    }
+    /* ─ FINDINGS ─ */
+    .finding { display: flex; gap: 0; margin-bottom: 4px; background: #ffffff; border: 1px solid #e5e7eb; overflow: hidden; }
+    .finding-accent { width: 5px; flex-shrink: 0; background: #dc2626; }
+    .finding-content { flex: 1; padding: 22px 24px; }
+    .finding-meta { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; flex-wrap: wrap; }
+    .finding-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #6b7280; }
+    .finding-title-text { font-size: 16px; font-weight: 800; color: #111827; letter-spacing: -0.01em; }
+    .finding-body { font-size: 13px; color: #4b5563; line-height: 1.85; margin-top: 6px; }
 
-    .grade-block {
-      background-color: #1a0808;
-      border: 2px solid #8b1a1a;
-      border-radius: 6px;
-      padding: 20px 36px;
-      text-align: center;
-      flex-shrink: 0;
-    }
+    /* ─ SECTION BREAK ─ */
+    .section-break { display: flex; align-items: center; gap: 16px; margin: 36px 0; }
+    .section-break-line { flex: 1; height: 1px; background: #e5e7eb; }
+    .section-break-label { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #9ca3af; }
 
-    .grade-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #666666;
-      margin-bottom: 4px;
-    }
+    /* ─ REVENUE BLOCK ─ */
+    .revenue-block { background: #1f2937; padding: 36px 32px; }
+    .revenue-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #ef4444; margin-bottom: 6px; }
+    .revenue-headline { font-size: 24px; font-weight: 900; color: #f9fafb; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .revenue-block p { font-size: 13px; color: #9ca3af; line-height: 1.85; }
 
-    .grade-value {
-      font-size: 80px;
-      font-weight: 900;
-      color: #cc2222;
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
+    /* ─ SOLUTION BLOCK ─ */
+    .solution-block { background: #ffffff; border: 2px solid #16a34a; padding: 32px 32px; margin-top: 4px; }
+    .solution-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #16a34a; margin-bottom: 6px; }
+    .solution-headline { font-size: 20px; font-weight: 900; color: #111827; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .solution-block p { font-size: 13px; color: #374151; line-height: 1.85; }
 
-    /* ── LAYOUT ── */
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 56px 40px 80px;
-    }
+    /* ─ CTA ─ */
+    .cta { background: #dc2626; padding: 52px 40px; text-align: center; margin-top: 44px; }
+    .cta h2 { font-size: 30px; font-weight: 900; color: #ffffff; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .cta p { font-size: 14px; color: #fca5a5; max-width: 420px; margin: 0 auto 30px; line-height: 1.65; }
+    .cta-btn { display: inline-block; background: #ffffff; color: #dc2626; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 36px; text-decoration: none; }
+    .cta-btn:hover { background: #fef2f2; }
 
-    /* ── HOOK ── */
-    .hook {
-      border-left: 4px solid #AAFF00;
-      padding: 24px 28px;
-      background-color: #111111;
-      border-radius: 0 6px 6px 0;
-      margin-bottom: 56px;
-    }
+    /* ─ FOOTER ─ */
+    .footer { background: #111827; padding: 14px 48px; text-align: center; }
+    .footer p { font-size: 11px; color: #374151; }
+    .footer a { color: #374151; text-decoration: none; }
+    .footer a:hover { color: #6b7280; }
 
-    .hook p {
-      font-size: 18px;
-      font-weight: 400;
-      color: #cccccc;
-      line-height: 1.65;
-    }
-
-    /* ── SECTION BLOCKS ── */
-    .section {
-      margin-bottom: 32px;
-    }
-
-    .section-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #AAFF00;
-      margin-bottom: 10px;
-    }
-
-    .section-body {
-      background-color: #111111;
-      border: 1px solid #1e1e1e;
-      border-radius: 6px;
-      padding: 22px 24px;
-    }
-
-    .section-body p {
-      font-size: 14px;
-      color: #b0b0b0;
-      line-height: 1.75;
-    }
-
-    /* ── REVENUE LEAK ── */
-    .revenue-block {
-      background-color: #150a0a;
-      border: 1px solid #3d1010;
-      border-radius: 6px;
-      padding: 22px 24px;
-    }
-
-    .revenue-block p {
-      font-size: 14px;
-      color: #b0b0b0;
-      line-height: 1.75;
-    }
-
-    /* ── RULE ── */
-    .rule {
-      height: 1px;
-      background-color: #1a1a1a;
-      margin: 48px 0;
-    }
-
-    /* ── SOLUTION ── */
-    .solution-block {
-      background-color: #0b1500;
-      border: 2px solid #AAFF00;
-      border-radius: 6px;
-      padding: 32px 28px;
-      margin-bottom: 56px;
-    }
-
-    .solution-block .section-label {
-      margin-bottom: 14px;
-    }
-
-    .solution-block p {
-      font-size: 14px;
-      color: #b0b0b0;
-      line-height: 1.75;
-    }
-
-    /* ── CTA ── */
-    .cta {
-      background-color: #111111;
-      border: 1px solid #1e1e1e;
-      border-radius: 8px;
-      padding: 52px 40px;
-      text-align: center;
-    }
-
-    .cta-heading {
-      font-size: 30px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-    }
-
-    .cta-sub {
-      font-size: 15px;
-      color: #666666;
-      max-width: 420px;
-      margin: 0 auto 32px;
-      line-height: 1.55;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      background-color: #AAFF00;
-      color: #0d0d0d;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 16px 36px;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-
-    .cta-btn:hover {
-      background-color: #99ee00;
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      background-color: #080808;
-      border-top: 1px solid #161616;
-      padding: 20px 40px;
-      text-align: center;
-    }
-
-    .footer p {
-      font-size: 12px;
-      color: #333333;
-    }
-
-    .footer a {
-      color: #444444;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      color: #666666;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .header { padding: 32px 20px; }
+    @media (max-width: 640px) {
+      .header { padding: 28px 20px; }
+      .stat-row { padding: 0 20px; }
+      .stat-tile { padding: 20px 12px; }
+      .stat-num { font-size: 28px; }
       .company-name { font-size: 28px; }
-      .grade-value { font-size: 60px; }
-      .container { padding: 40px 20px 60px; }
+      .grade-value { font-size: 64px; }
+      .container { padding: 32px 20px 60px; }
       .cta { padding: 40px 20px; }
-      .footer { padding: 20px; }
+      .footer { padding: 14px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
+  <div class="top-stripe"></div>
+
   <header class="header">
-    <div>
-      <div class="audit-eyebrow">Visual Authority Audit</div>
-      <h1 class="company-name">{{COMPANY_NAME}}</h1>
-      <div class="website-url">
-        <a href="{{WEBSITE_URL}}" target="_blank" rel="noopener">{{WEBSITE_URL}}</a>
+    <div class="header-inner">
+      <div class="report-label">Visual Authority Audit — {{COMPANY_NAME}}</div>
+      <div class="header-row">
+        <div>
+          <h1 class="company-name">{{COMPANY_NAME}}</h1>
+          <div class="company-url"><a href="{{WEBSITE_URL}}" target="_blank" rel="noopener">{{WEBSITE_URL}}</a></div>
+        </div>
+        <div class="grade-stamp">
+          <div class="grade-value">{{VISUAL_GRADE}}</div>
+          <div class="grade-label">Visual Authority Grade</div>
+        </div>
       </div>
-    </div>
-    <div class="grade-block">
-      <div class="grade-label">Visual Authority Grade</div>
-      <div class="grade-value">{{VISUAL_GRADE}}</div>
     </div>
   </header>
 
-  <!-- MAIN -->
+  <div class="stat-row">
+    <div class="stat-row-inner">
+      <div class="stat-tile">
+        <div class="stat-num">3</div>
+        <div class="stat-desc">Gaps Identified</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">1</div>
+        <div class="stat-desc">Critical Finding</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">0</div>
+        <div class="stat-desc">Sections Passing</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num" style="color:#4ade80;">1</div>
+        <div class="stat-desc" style="color:#374151;">Solution Ready</div>
+      </div>
+    </div>
+  </div>
+
   <main class="container">
 
-    <!-- THE HOOK -->
     <div class="hook">
       <p>{{THE_HOOK}}</p>
     </div>
 
-    <!-- GAP SECTIONS -->
-    <div class="section">
-      <div class="section-label">Asset Quality Gaps</div>
-      <div class="section-body">
-        <p>{{ASSET_QUALITY_GAPS}}</p>
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 01</span>
+          <span class="finding-title-text">Asset Quality Gaps</span>
+        </div>
+        <div class="finding-body">{{ASSET_QUALITY_GAPS}}</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-label">Mission Control Gaps</div>
-      <div class="section-body">
-        <p>{{MISSION_CONTROL_GAPS}}</p>
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 02</span>
+          <span class="finding-title-text">Mission Control Gaps</span>
+        </div>
+        <div class="finding-body">{{MISSION_CONTROL_GAPS}}</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-label">Analytics &amp; Speed Gaps</div>
-      <div class="section-body">
-        <p>{{ANALYTICS_SPEED_GAPS}}</p>
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 03</span>
+          <span class="finding-title-text">Analytics &amp; Speed Gaps</span>
+        </div>
+        <div class="finding-body">{{ANALYTICS_SPEED_GAPS}}</div>
       </div>
     </div>
 
-    <div class="rule"></div>
-
-    <!-- REVENUE LEAK -->
-    <div class="section">
-      <div class="section-label">The Revenue Leak</div>
-      <div class="revenue-block">
-        <p>{{REVENUE_LEAK}}</p>
-      </div>
+    <div class="section-break">
+      <div class="section-break-line"></div>
+      <div class="section-break-label">Business Impact</div>
+      <div class="section-break-line"></div>
     </div>
 
-    <div class="rule"></div>
+    <div class="revenue-block">
+      <div class="revenue-eyebrow">Critical — Revenue Leak</div>
+      <div class="revenue-headline">What staying invisible is costing you.</div>
+      <p>{{REVENUE_LEAK}}</p>
+    </div>
 
-    <!-- PHOTO-FIRST SOLUTION -->
     <div class="solution-block">
-      <div class="section-label">The Photo-First Solution</div>
+      <div class="solution-eyebrow">Recommended Action</div>
+      <div class="solution-headline">The Photo-First Solution</div>
       <p>{{PHOTO_FIRST_SOLUTION}}</p>
     </div>
 
-    <!-- CTA -->
     <div class="cta">
-      <h2 class="cta-heading">Ready to fix this?</h2>
-      <p class="cta-sub">This audit took 15 minutes. The fix takes one session. Let's talk about what visible looks like for {{COMPANY_NAME}}.</p>
+      <h2>Let's make {{COMPANY_NAME}} impossible to ignore.</h2>
+      <p>This audit took 15 minutes. The fix takes one session.</p>
       <a class="cta-btn" href="https://russellmoorephotography.hbportal.co/public/6a3d34bca0879b2582033b9a" rel="noopener">Book a Discovery Call</a>
     </div>
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
-    <p>
-      Visibility Audit prepared by
-      <a href="https://russell-moore.com" target="_blank" rel="noopener">Russell Moore</a>
-      &nbsp;·&nbsp;
-      <a href="https://russell-moore.com" target="_blank" rel="noopener">russell-moore.com</a>
-    </p>
+    <p>Visibility Audit prepared by <a href="https://russell-moore.com" target="_blank" rel="noopener">Russell Moore</a> &nbsp;·&nbsp; <a href="https://russell-moore.com" target="_blank" rel="noopener">russell-moore.com</a></p>
   </footer>
 
 </body>
