@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visibility Audit — Jaya Holt</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f8f9fa; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; color: #1a1f2e; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ─ TOP STRIPE ─ */
+    .top-stripe { height: 4px; background: #dc2626; }
+
+    /* ─ HEADER ─ */
+    .header { background: #ffffff; padding: 40px 48px 36px; border-bottom: 1px solid #e5e7eb; }
+    .header-inner { max-width: 860px; margin: 0 auto; }
+    .report-label { font-size: 10px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #9ca3af; margin-bottom: 14px; }
+    .header-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .company-name { font-size: 40px; font-weight: 900; color: #111827; letter-spacing: -0.03em; line-height: 1.05; }
+    .company-url { margin-top: 8px; font-size: 12px; color: #9ca3af; }
+    .company-url a { color: #9ca3af; text-decoration: none; }
+
+    /* ─ GRADE BLOCK ─ */
+    .grade-stamp { text-align: right; flex-shrink: 0; }
+    .grade-value { font-size: 88px; font-weight: 900; color: #dc2626; line-height: 1; letter-spacing: -0.05em; }
+    .grade-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #9ca3af; margin-top: 2px; }
+
+    /* ─ STAT ROW ─ */
+    .stat-row { background: #111827; padding: 0 48px; }
+    .stat-row-inner { max-width: 860px; margin: 0 auto; display: flex; }
+    .stat-tile { flex: 1; padding: 24px 20px; border-right: 1px solid #1f2937; text-align: center; }
+    .stat-tile:last-child { border-right: none; }
+    .stat-num { font-size: 36px; font-weight: 900; color: #f87171; line-height: 1; letter-spacing: -0.03em; }
+    .stat-desc { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #4b5563; margin-top: 6px; }
+
+    /* ─ BODY ─ */
+    .container { max-width: 860px; margin: 0 auto; padding: 48px 48px 80px; }
+
+    /* ─ HOOK ─ */
+    .hook { margin-bottom: 44px; }
+    .hook p { font-size: 18px; color: #1f2937; line-height: 1.7; font-weight: 400; border-left: 4px solid #dc2626; padding-left: 20px; }
+
+    /* ─ FINDINGS ─ */
+    .finding { display: flex; gap: 0; margin-bottom: 4px; background: #ffffff; border: 1px solid #e5e7eb; overflow: hidden; }
+    .finding-accent { width: 5px; flex-shrink: 0; background: #dc2626; }
+    .finding-content { flex: 1; padding: 22px 24px; }
+    .finding-meta { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; flex-wrap: wrap; }
+    .finding-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #6b7280; }
+    .finding-title-text { font-size: 16px; font-weight: 800; color: #111827; letter-spacing: -0.01em; }
+    .finding-body { font-size: 13px; color: #4b5563; line-height: 1.85; margin-top: 6px; }
+
+    /* ─ SECTION BREAK ─ */
+    .section-break { display: flex; align-items: center; gap: 16px; margin: 36px 0; }
+    .section-break-line { flex: 1; height: 1px; background: #e5e7eb; }
+    .section-break-label { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #9ca3af; }
+
+    /* ─ REVENUE BLOCK ─ */
+    .revenue-block { background: #1f2937; padding: 36px 32px; }
+    .revenue-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #ef4444; margin-bottom: 6px; }
+    .revenue-headline { font-size: 24px; font-weight: 900; color: #f9fafb; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .revenue-block p { font-size: 13px; color: #9ca3af; line-height: 1.85; }
+
+    /* ─ SOLUTION BLOCK ─ */
+    .solution-block { background: #ffffff; border: 2px solid #16a34a; padding: 32px 32px; margin-top: 4px; }
+    .solution-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #16a34a; margin-bottom: 6px; }
+    .solution-headline { font-size: 20px; font-weight: 900; color: #111827; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .solution-block p { font-size: 13px; color: #374151; line-height: 1.85; }
+
+    /* ─ CTA ─ */
+    .cta { background: #dc2626; padding: 52px 40px; text-align: center; margin-top: 44px; }
+    .cta h2 { font-size: 30px; font-weight: 900; color: #ffffff; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .cta p { font-size: 14px; color: #fca5a5; max-width: 420px; margin: 0 auto 30px; line-height: 1.65; }
+    .cta-btn { display: inline-block; background: #ffffff; color: #dc2626; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 36px; text-decoration: none; }
+    .cta-btn:hover { background: #fef2f2; }
+
+    /* ─ FOOTER ─ */
+    .footer { background: #111827; padding: 14px 48px; text-align: center; }
+    .footer p { font-size: 11px; color: #374151; }
+    .footer a { color: #374151; text-decoration: none; }
+    .footer a:hover { color: #6b7280; }
+
+    @media (max-width: 640px) {
+      .header { padding: 28px 20px; }
+      .stat-row { padding: 0 20px; }
+      .stat-tile { padding: 20px 12px; }
+      .stat-num { font-size: 28px; }
+      .company-name { font-size: 28px; }
+      .grade-value { font-size: 64px; }
+      .container { padding: 32px 20px 60px; }
+      .cta { padding: 40px 20px; }
+      .footer { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-stripe"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="report-label">Visual Authority Audit — Jaya Holt</div>
+      <div class="header-row">
+        <div>
+          <h1 class="company-name">Jaya Holt</h1>
+          <div class="company-url"><a href="https://recruiting.russell-moore.com/jaya-holt" target="_blank" rel="noopener">https://recruiting.russell-moore.com/jaya-holt</a></div>
+        </div>
+        <div class="grade-stamp">
+          <div class="grade-value">B</div>
+          <div class="grade-label">Visual Authority Grade</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="stat-row">
+    <div class="stat-row-inner">
+      <div class="stat-tile">
+        <div class="stat-num">3</div>
+        <div class="stat-desc">Gaps Identified</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">1</div>
+        <div class="stat-desc">Critical Finding</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">0</div>
+        <div class="stat-desc">Sections Passing</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num" style="color:#4ade80;">1</div>
+        <div class="stat-desc" style="color:#374151;">Solution Ready</div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <div class="hook">
+      <p>Athletic profile leverages premium dark UI with gradient text effects and animated elements, but relies on a single hero image without supporting visual asset strategy for recruiting engagement at scale</p>
+    </div>
+
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 01</span>
+          <span class="finding-title-text">Asset Quality Gaps</span>
+        </div>
+        <div class="finding-body">One hero photo (webp format, optimized) present but no supporting visual infrastructure: missing performance action stills, meet highlight reels, race footage embeds, training montages, or comparative split-screen performance visuals that recruiters require for evaluation. No video carousel, gallery system, or multi-angle asset organization. Image lacks context layers (splits, pace, conditions metadata)</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 02</span>
+          <span class="finding-title-text">Mission Control Gaps</span>
+        </div>
+        <div class="finding-body">No asset management backend visible; profile appears static/template-driven rather than athlete-controlled. No intake form, upload workflow, or content calendar system. CTA directs to generic profile upgrade rather than visual content production plan. Missing athlete content briefing, photo shoot scheduling system, or asset versioning for competitive narrative updates</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-accent"></div>
+      <div class="finding-content">
+        <div class="finding-meta">
+          <span class="finding-tag">Finding 03</span>
+          <span class="finding-title-text">Analytics &amp; Speed Gaps</span>
+        </div>
+        <div class="finding-body">GTM tracking installed but no visible photo engagement metrics, image load performance monitoring, or visual content performance attribution. No heatmap data on whether recruiters interact with photo vs. stats. No A/B testing infrastructure for hero image variations. Page speed optimization for image delivery not evident (single webp hero is sufficient but no lazy-load strategy apparent for future multi-asset pages)</div>
+      </div>
+    </div>
+
+    <div class="section-break">
+      <div class="section-break-line"></div>
+      <div class="section-break-label">Business Impact</div>
+      <div class="section-break-line"></div>
+    </div>
+
+    <div class="revenue-block">
+      <div class="revenue-eyebrow">Critical — Revenue Leak</div>
+      <div class="revenue-headline">What staying invisible is costing you.</div>
+      <p>Profile monetizes via generic 'Upgrade Profile' CTA with vague feature list—does not sell the visual content production premium tier. Recruiters scrolling past single hero photo with no performance film, split analysis visuals, or dynamic content updates will not perceive differentiation justifying paid features. Missing upsell path: 'Professional Meet Video Package $X' / 'Performance Analysis Visual Suite $Y'</p>
+    </div>
+
+    <div class="solution-block">
+      <div class="solution-eyebrow">Recommended Action</div>
+      <div class="solution-headline">The Photo-First Solution</div>
+      <p>Implement guided visual asset upload system: (1) Athlete captures 5-10 race action stills + training clips via mobile-first intake, (2) Platform auto-organizes into 'Meet Results' gallery, 'PR Moments' highlight reel, 'Training Consistency' timeline, (3) Each asset tagged with event/date/pace metadata visible to recruiters, (4) Hero photo rotates based on recruiter view count, (5) Monetize via 'Professional Photo Shoot Bundle' (action stills + video edit) + 'Video Analysis Package' (pace overlay, split visualization), (6) Add conversion pixel to track which visual assets drive recruiter engagement → coach contact</p>
+    </div>
+
+    <div class="cta">
+      <h2>Let's make Jaya Holt impossible to ignore.</h2>
+      <p>This audit took 15 minutes. The fix takes one session.</p>
+      <a class="cta-btn" href="https://russellmoorephotography.hbportal.co/public/6a3d34bca0879b2582033b9a" rel="noopener">Book a Discovery Call</a>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Visibility Audit prepared by <a href="https://russell-moore.com" target="_blank" rel="noopener">Russell Moore</a> &nbsp;·&nbsp; <a href="https://russell-moore.com" target="_blank" rel="noopener">russell-moore.com</a></p>
+  </footer>
+
+</body>
+</html>
